@@ -1,0 +1,51 @@
+def isMinimal(G,C)
+	Let Waiting = []
+
+	Pick an edge E in G, assign direction arbitrarily
+	Add the two Vs incident to E to Waiting
+
+	While Waiting is not empty:
+		Pop vertex V from Waiting
+		Starting at an edge incident to V that has a direction already assigned:
+			Try to assign directions alternating between inward and outward along the cyclic ordering.
+			If we must assign a contradictory direction to an edge that already has a direction assigned:
+				Return false 
+		Add vertices incident to each edge that is newly assigned a direction to Waiting
+
+	Return True (we had no problems)
+
+
+def countDirectedCycles(G,C)
+	waitingEdges = all edges
+	cycles = []
+	while waitingEdges is not empty:
+		currentEdge = waitingEdges.pop()
+		thisCycle = [currentEdge]
+		while (currentEdge not in thisCycle):
+			thisCycle.push(currentEdge)
+			currentEdge = currentEdge.toVertex.next(currentEdge)
+		cycles.push(thisCycle)
+	return length(cycles)
+		
+
+For connected 2-cuts on a k-torus:
+----------------------------------
+
+LegitList = []
+
+For all graphs G that
+	are a single loop, or
+	( satisfy 4k >= |E| >= 2|V|, and
+	  for all vertices v, deg(v) >=4, and
+	  for all vertices v, and deg(v) is even )
+
+	Compute Euler char X(G)
+
+	For each possible cyclic ordering C on G:
+		If not isMinimal(G,C):
+			return False
+		Set n = countDirectedCycles(G) (also = to number of boundary components)
+		g of thickened graph = 1 - 1/2X(G) - 1/2n
+		If g+n-2 <= k: (i.e., glueing process doesn't introduce too many genera)
+			add G to LegitList
+			break

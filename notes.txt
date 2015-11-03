@@ -1,0 +1,14 @@
+From Cutting Surface (n,g) to min-Graph:
+	Graph must have same Euler char as surface,
+	Must have a cyclic ordering where the number of directed cycles equal to number of boundary components,
+	and must satisfy minimality condition
+
+	Idea: think about starting with a single directed loop and then "laminating" the rest of the cycles inside while at each stage preserving the minimality condition.
+
+	Note: A rotation system yields a disconnected digraph with the right number of cycles by splitting edges and writing both 
+
+
+Things to do:
+- Implement
+- Extend to n-cuts on k-torus
+- Disconnected graphs
