@@ -43,7 +43,7 @@ For all graphs G that
 
 	For each possible cyclic ordering C on G:
 		If not isMinimal(G,C):
-			return False
+			continue
 		Set n = countDirectedCycles(G) (also = to number of boundary components)
 		g of thickened graph = 1 - 1/2X(G) - 1/2n
 		If g+n-2 <= k: (i.e., glueing process doesn't introduce too many genera)
