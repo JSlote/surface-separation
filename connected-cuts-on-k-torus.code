@@ -16,7 +16,7 @@ def isMinimal(G,C)
 
 
 def countDirectedCycles(G,C)
-	waitingEdges = all edges
+	waitingEdges = tg.graph.edges()
 	cycles = []
 	while waitingEdges is not empty:
 		currentEdge = waitingEdges.pop()

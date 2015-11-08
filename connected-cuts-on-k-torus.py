@@ -7,20 +7,34 @@ k = 4
 """
 class RotationSystem:
 
-Initialize it with a dictionary of nodes and a dictionary of edges:
+Initialize it with a dictionary of nodes:edgeCycle pairs
 
-E.g., the eye:
+E.g., one RotationSystem for the eye graph would be:
 
-nodes = {1:(1,2,3,4), 2:(2,3,1,4)}
-edges = {1:(1,2),2:(1,2),3:(1,2),4(1,2)}
+rotSysList = {1:(1,2,3,4), 2:(2,3,1,4)}
+myRotSys = RotationSystem(rotSysList)
 
-myRotSys = RotationSystem(nodes, edges)
+then you can do:
 
-TODO: There is a little redundancy in this init. Let's try to fix that.
+myRotSys.edges
+myRotSys.nodes
+myRotSys.nextUndirEdge(node,currentEdge)
+myRotSys.nextDirEdge(node,currentEdge)
+myRotSys.eulerChar
+
 """
 class RotationSystem(object):
-	def __init__(self, nodes, edges):
-		self.nodes = nodes
+	def __init__(self, rotSysList):
+		self.nodes = rotSysList
+
+		edges = {}
+		for node in self.nodes:
+			for edge in self.nodes[node]:
+				if edge in edges:
+					edges[edge][1] = node
+				else:
+					edges[edge] = [node, None]
+
 		self.undirEdges = edges
 		self.dirEdges = {}
 		for edge in self.undirEdges:
@@ -28,14 +42,17 @@ class RotationSystem(object):
 			#also add the other direction
 			self.dirEdges[(edge,False)] = self.undirEdges[edge][::-1]
 
-	def nextEdge(self, node, edge):
-		cycle = self.nodes[node]
-		currentEdgeIndex = cycle.index(edge)
-		nextEdgeIndex = cycle[(currentEdgeIndex+1) % len(cycle)]
-		return cycle[nextEdgeIndex]
+		self.eulerChar = len(self.nodes) - len(self.undirEdges)
+
+	def nextUndirEdge(self, node, edge):
+		theCycle = self.nodes[node]
+		currentEdgeIndex = theCycle.index(edge)
+		nextEdgeIndex = (currentEdgeIndex+1) % len(theCycle)
+		return theCycle[nextEdgeIndex]
 
 	def nextDirEdge(self, node, edge):
 		nextUndirEdge = self.nextEdge(node, edge)
+		#return the correct dir edge (has the right "to" node)
 		if self.dirEdges[(nextUndirEdge,True)][0] is node:
 			return (nextUndirEdge,True)
 		else:
