@@ -1,4 +1,4 @@
-def isMinimal(G,C):
+def isMinimal(TG):
 	Let Waiting = []
 
 	Pick an edge E in G, assign direction arbitrarily
@@ -15,17 +15,17 @@ def isMinimal(G,C):
 	Return True (we had no problems)
 
 
-def countDirectedCycles(G,C):
-	waitingEdges = tg.graph.edges()
+def countDirectedCycles(TG):
+	waitingEdges = TG.dirEdges
 	cycles = []
 	while waitingEdges is not empty:
 		currentEdge = waitingEdges.pop()
 		thisCycle = [currentEdge]
 		while (currentEdge not in thisCycle):
 			thisCycle.push(currentEdge)
-			currentEdge = currentEdge.toVertex.next(currentEdge)
+			currentEdge = TG.nextDirEdge(TG.dirEdges[currentEdge][1],currentEdge)
 		cycles.push(thisCycle)
-	return length(cycles)
+	return len(cycles)
 		
 
 #For connected 2-cuts on a k-torus:
