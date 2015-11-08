@@ -14,7 +14,7 @@ E.g., one RotationSystem for the eye graph would be:
 rotSysList = {1:(1,2,3,4), 2:(2,3,1,4)}
 myRotSys = RotationSystem(rotSysList)
 
-then you can do:
+Then you can do:
 
 myRotSys.edges
 myRotSys.nodes

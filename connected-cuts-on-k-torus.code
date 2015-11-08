@@ -1,4 +1,4 @@
-def isMinimal(G,C)
+def isMinimal(G,C):
 	Let Waiting = []
 
 	Pick an edge E in G, assign direction arbitrarily
@@ -15,7 +15,7 @@ def isMinimal(G,C)
 	Return True (we had no problems)
 
 
-def countDirectedCycles(G,C)
+def countDirectedCycles(G,C):
 	waitingEdges = tg.graph.edges()
 	cycles = []
 	while waitingEdges is not empty:
@@ -28,24 +28,24 @@ def countDirectedCycles(G,C)
 	return length(cycles)
 		
 
-For connected 2-cuts on a k-torus:
-----------------------------------
+#For connected 2-cuts on a k-torus:
+#----------------------------------
 
-LegitList = []
+legitList = []
 
-For all graphs G that
+for graphs G that
 	are a single loop, or
 	( satisfy 4k >= |E| >= 2|V|, and
 	  for all vertices v, deg(v) >=4, and
-	  for all vertices v, and deg(v) is even )
+	  for all vertices v, and deg(v) is even ):
 
-	Compute Euler char X(G)
-
-	For each possible cyclic ordering C on G:
-		If not isMinimal(G,C):
+	for each possible cyclic ordering C on G:
+		if not isMinimal(TG):
 			continue
-		Set n = countDirectedCycles(G) (also = to number of boundary components)
-		g of thickened graph = 1 - 1/2X(G) - 1/2n
-		If g+n-2 <= k: (i.e., glueing process doesn't introduce too many genera)
-			add G to LegitList
+		n = countDirectedCycles(TG) 
+		# n = number of boundary components
+		g = 1 - 0.5*TG.eulerChar - 0.5*n
+		if g+n-2 <= k: 
+		#(i.e., glueing process doesn't introduce too many genera)
+			legitList.append(G)
 			break
