@@ -33,13 +33,31 @@ myRotSys.nodes
 myRotSys.nextUndirEdge(node,currentEdge)
 myRotSys.nextDirEdge(node,currentEdge)
 myRotSys.eulerChar
-
-TODO: currently can't handle loops:
-The bouquet, {1:(1,3,2,1,3,2)}, won't work (I don't think)
 """
 class RotationSystem(object):
+	@staticmethod
+	def __loopFree(G):
+		loopFreeG = {}
+		for node in G:
+			loops = []
+			edges = []
+			for edge in G[node]:
+				if G[node].count(edge) == 2:
+					if edge not in loops:
+						loops.append(edge)
+				else:
+					edges.append(edge)
+
+			for edge in loops:
+				edges.extend([(edge,True),(edge,False)])
+				loopFreeG[(node,edge)] = [(edge,True),(edge,False)]
+
+			loopFreeG[node] = edges
+
+		return loopFreeG
+	
 	def __init__(self, G):
-		self.nodes = self.loopFree(G)
+		self.nodes = self.__loopFree(G)
 
 		edges = {}
 		for node in self.nodes:
@@ -132,27 +150,6 @@ class RotationSystem(object):
 				shouldBeToCurrNode = not shouldBeToCurrNode
 
 		return True #(we had no problems)
-
-	@staticmethod
-	def loopFree(G):
-		loopFreeG = {}
-		for node in G:
-			loops = []
-			edges = []
-			for edge in G[node]:
-				if G[node].count(edge) == 2:
-					if edge not in loops:
-						loops.append(edge)
-				else:
-					edges.append(edge)
-
-			for edge in loops:
-				edges.extend([(edge,True),(edge,False)])
-				loopFreeG[(node,edge)] = [(edge,True),(edge,False)]
-
-			loopFreeG[node] = edges
-
-		return loopFreeG
 
 def allRotationSystems(G):
 	def recurse(remainingNodes):
