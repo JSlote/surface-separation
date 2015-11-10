@@ -7,8 +7,6 @@ def mergeDicts(x, y):
 	z.update(y)
 	return z
 
-# k = raw_input("Enter genus: ")
-
 """
 class RotationSystem:
 
@@ -175,8 +173,6 @@ def main(k):
 			  {1:[1,1,2,2]},
 			  {1:[1,1,2,2,3,3,4,4]}]
 
-	# graphs = [{1:[1,1,2,2,3,3]}]
-
 	for G in graphs:
 		for rotSys in allRotationSystems(G):
 			TG = RotationSystem(rotSys)
@@ -190,5 +186,5 @@ def main(k):
 
 	for legitGraph in legitList:
 		print legitGraph
-		
+
 main(1)
