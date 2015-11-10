@@ -1,12 +1,6 @@
 # import networkx as nx
 from itertools import permutations as perms
 
-# def removeAll(l, x):
-# 	"""Given a list and an element, remove all occurrences"""
-# 	t = [y for y in l if y != x]
-# 	del l[:]
-# 	l.extend(t)
-
 def mergeDicts(x, y):
 	'''Given two dicts, merge them into a new dict as a shallow copy.'''
 	z = x.copy()
@@ -45,11 +39,14 @@ class RotationSystem(object):
 				if G[node].count(edge) == 2:
 					if edge not in loops:
 						loops.append(edge)
+						edges.append((edge,True))
+					else:
+						edges.append((edge,False))
 				else:
 					edges.append(edge)
 
 			for edge in loops:
-				edges.extend([(edge,True),(edge,False)])
+				# edges.extend([(edge,True),(edge,False)])
 				loopFreeG[(node,edge)] = [(edge,True),(edge,False)]
 
 			loopFreeG[node] = edges
@@ -102,6 +99,7 @@ class RotationSystem(object):
 				thisCycle.append(currentEdge)
 				currentEdge = self.nextDirEdge(currentEdge)
 			cycles.append(thisCycle)
+
 		return len(cycles)
 
 	def isMinimal(self):
@@ -177,17 +175,20 @@ def main(k):
 			  {1:[1,1,2,2]},
 			  {1:[1,1,2,2,3,3,4,4]}]
 
+	# graphs = [{1:[1,1,2,2,3,3]}]
+
 	for G in graphs:
-		for sys in allRotationSystems(G):
-			TG = RotationSystem(G)
+		for rotSys in allRotationSystems(G):
+			TG = RotationSystem(rotSys)
 			if not TG.isMinimal(): continue
 			n = TG.countDirectedCycles()
-			g = 1 - 0.5*TG.eulerChar -0.5*n
+			g = 1 - 0.5*TG.eulerChar - 0.5*n
 			if g + n - 2 <= k:
 				legitList.append(G)
 				break
 			#else: 'fails genus test'
 
-	print legitList
-
+	for legitGraph in legitList:
+		print legitGraph
+		
 main(1)
