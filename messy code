@@ -1,0 +1,339 @@
+# surface-separation
+
+#rotSysList = {1:(1,2,3,4), 2:(2,3,1,4)}
+
+#for graphs G that
+#	are a single loop, or
+#	( satisfy 4k >= |E| >= 2|V|, and
+#	  for all vertices v, deg(v) >=4, and
+#	  for all vertices v, and deg(v) is even ):
+
+
+
+
+# def generategraphs(degreelist):
+# 	sum = 0
+# 	for i in degreelist:
+# 		sum = sum + int(i) 
+# 	edgenum = sum/2
+# 	dictList = {}
+# 	vertlist = list(range(len(degreelist)))
+# 	blah = []
+# 	for i in range(len(vertlist)):
+# 		for j in range(int(degreelist[i])):
+# 			blah.append(vertlist[i])
+# 	speciallist = []
+# 	for i, x in enumerate(l_perm3(blah[:])):
+# 		speciallist.append(x)
+# 	for i in range(len(speciallist)):
+# 		newlist2 = list(chunks(speciallist[i], 2))
+# 		speciallist[i] = newlist2		
+# 	return speciallist
+# 	
+#MAZ NUM OF LOOPS: divide every entry in the dgree sequence by 2, and that's the max # of
+#loops at that vertex. 
+
+# def generategraphs(degreelist):
+# 	posslooplist = []
+# 	for i in range(len(degreelist)):
+# 		posslooplist.append(int(degreelist[i]/2))
+# 	newlist = posslooplist
+# 
+# 	if len(posslooplist) == 1:
+# 		woot = []
+# 		for i in range(posslooplist[0]+1):
+# 			newlist = []
+# 			newlist.append(posslooplist[0]-i)
+# 			woot.append(newlist)
+# 		for i in range(len(woot)):	
+# 			for j in range(i+1,len(woot)):
+# 				if set(woot[i]) == set(woot[j]):
+# 					woot[j] = ['null']		
+# 		woot2 = []
+# 		for i in range(len(woot)):
+# 			if woot[i] != ['null']:
+# 				woot2.append(woot[i])
+# 		return woot2	
+# 			
+# 	elif len(posslooplist) == 2:
+# 		woot = []
+# 		for i in range(posslooplist[0]+1):
+# 			for j in range(posslooplist[1]+1):
+# 				newlist = []
+# 				newlist.append(posslooplist[0]-i)
+# 				newlist.append(posslooplist[1]-j)
+# 				woot.append(newlist)
+# 		for i in range(len(woot)):	
+# 			for j in range(i+1,len(woot)):
+# 				if set(woot[i]) == set(woot[j]):
+# 					woot[j] = ['null']				
+# 		woot2 = []
+# 		for i in range(len(woot)):
+# 			if woot[i] != ['null']:
+# 				woot2.append(woot[i])
+# 		return woot2	
+# 				
+# 	elif len(posslooplist) == 3:
+# 		woot = []
+# 		for i in range(posslooplist[0]+1):
+# 			for j in range(posslooplist[1]+1):
+# 				for k in range(posslooplist[2]+1):
+# 					newlist = []
+# 					newlist.append(posslooplist[0]-i)
+# 					newlist.append(posslooplist[1]-j)
+# 					newlist.append(posslooplist[2]-k)
+# 					woot.append(newlist)
+# 		for i in range(len(woot)):	
+# 			for j in range(i+1,len(woot)):
+# 				if set(woot[i]) == set(woot[j]):
+# 					woot[j] = ['null']					
+# 		woot2 = []
+# 		for i in range(len(woot)):
+# 			if woot[i] != ['null']:
+# 				woot2.append(woot[i])
+# 				
+# 		return woot2		
+# 					
+# 	elif len(posslooplist) == 4:
+# 		woot = []
+# 		for i in range(posslooplist[0]+1):
+# 			for j in range(posslooplist[1]+1):
+# 				for k in range(posslooplist[2]+1):
+# 					for m in range(posslooplist[3]+1):
+# 						newlist = []
+# 						newlist.append(posslooplist[0]-i)
+# 						newlist.append(posslooplist[1]-j)
+# 						newlist.append(posslooplist[2]-k)
+# 						newlist.append(posslooplist[3]-m)
+# 						woot.append(newlist)
+# 		for i in range(len(woot)):	
+# 			for j in range(i+1,len(woot)):
+# 				if set(woot[i]) == set(woot[j]):
+# 					woot[j] = ['null']
+# 		woot2 = []
+# 		for i in range(len(woot)):
+# 			if woot[i] != ['null']:
+# 				woot2.append(woot[i])
+# 		return woot2
+# 				
+# 	elif len(posslooplist) == 5:
+# 		woot = []
+# 		for i in range(posslooplist[0]+1):
+# 			for j in range(posslooplist[1]+1):
+# 				for k in range(posslooplist[2]+1):
+# 					for m in range(posslooplist[3]+1):
+# 						for n in range(posslooplist[4]+1):
+# 							newlist = []
+# 							newlist.append(posslooplist[0]-i)
+# 							newlist.append(posslooplist[1]-j)
+# 							newlist.append(posslooplist[2]-k)
+# 							newlist.append(posslooplist[3]-m)
+# 							newlist.append(posslooplist[4]-n)
+# 							woot.append(newlist)
+# 		for i in range(len(woot)):	
+# 			for j in range(i+1,len(woot)):
+# 				if set(woot[i]) == set(woot[j]):
+# 					woot[j] = ['null']
+# 		woot2 = []
+# 		for i in range(len(woot)):
+# 			if woot[i] != ['null']:
+# 				woot2.append(woot[i])
+# 				
+# 		return woot2
+# 							
+# 	elif len(posslooplist) == 6:
+# 		woot = []
+# 		for i in range(posslooplist[0]+1):
+# 			for j in range(posslooplist[1]+1):
+# 				for k in range(posslooplist[2]+1):
+# 					for m in range(posslooplist[3]+1):
+# 						for n in range(posslooplist[4]+1):
+# 							for o in range(posslooplist[5]+1):
+# 								newlist = []
+# 								newlist.append(posslooplist[0]-i)
+# 								newlist.append(posslooplist[1]-j)
+# 								newlist.append(posslooplist[2]-k)
+# 								newlist.append(posslooplist[3]-m)
+# 								newlist.append(posslooplist[4]-n)
+# 								newlist.append(posslooplist[5]-o)
+# 								woot.append(newlist)
+# 									
+# 		for i in range(len(woot)):	
+# 			for j in range(i+1,len(woot)):
+# 				if set(woot[i]) == set(woot[j]):
+# 					woot[j] = ['null']
+# 		woot2 = []
+# 		for i in range(len(woot)):
+# 			if woot[i] != ['null']:
+# 				woot2.append(woot[i])
+# 		
+# 		return woot2
+
+
+
+k = raw_input("Enter k: ")
+k = int(k)
+
+box = []
+
+
+
+def specialpartition(number):
+	answer = set()
+	answer.add((number, ))
+	for x in range(4, number, 2):
+		for y in specialpartition(number - x):
+			answer.add(tuple(sorted((x, ) + y)))
+	answer = list(answer)
+	list2 = []
+	for tuples in answer:
+		if 2 not in tuples:
+			list2.append(tuples)
+	return list2
+	
+
+	
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in xrange(0, len(l), n):
+        yield l[i:i+n]
+        
+def l_perm3(items):
+    '''Generator yielding Lexicographic permutations of a list of items'''
+    if not items:
+        yield []
+    else:
+        dir = 1
+        new_items = []
+        this = [items.pop()]
+        for item in l_perm3(items):
+            lenitem = len(item)
+            try:
+                # Never insert 'this' above any other 'this' in the item 
+                maxinsert = item.index(this[0])
+            except ValueError:
+                maxinsert = lenitem
+            if dir == 1:
+                # step down
+                for new_item in [item[:i] + this + item[i:] 
+                                 for i in range(lenitem, -1, -1)
+                                 if i <= maxinsert]:
+                    yield new_item                    
+            else:    
+                # step up
+                for new_item in [item[:i] + this + item[i:] 
+                                 for i in range(lenitem + 1)
+                                 if i <= maxinsert]:
+                    yield new_item                    
+            dir *= -1
+            
+            
+from math import factorial
+def l_perm_length(items):
+    '''\
+    Returns the len of sequence of lexicographic perms of items. 
+    Each item of items must itself be hashable'''
+    counts = [items.count(item) for item in set(items)]
+    ans = factorial(len(items))
+    for c in counts:
+        ans /= factorial(c)
+
+
+listoftuplesfinal = []
+for possv in range(1, 2*k+1):
+	numedge = 2*possv
+	while numedge <= 4*k:
+		if numedge - possv <= 2*k:
+			listoftuples = specialpartition(numedge*2)
+			for tup in listoftuples:
+				if len(tup) == possv:
+					listoftuplesfinal.append(tup)
+		else:
+			pass
+		numedge = numedge + 1
+listoftuplesfinal2 = []
+for tuple in listoftuplesfinal:
+	l = list(tuple)
+	listoftuplesfinal2.append(l)
+
+print listoftuplesfinal2
+
+for list in listoftuplesfinal2:
+	matrixlist = []
+	for i in range(len(list)):
+		matrixlist.append([])
+		for j in range(i,len(list)):
+			matrixlist[i].append(0)
+	print matrixlist
+
+matrixlist2 = []
+for i in range(len([4,4,4])):
+	matrixlist2.append([])
+	for j in range(i,len([4,4,4])):
+		matrixlist2[i].append(0)
+print matrixlist2			
+
+# def thefunc(currBuckets,partialMatrix,currIndex1,currIndex2):
+# 	for i in range(len(currBuckets)):
+# 		c = currBuckets[i]
+# 		if currIndex1 == len(currBuckets)-1 and currIndex2 == 0:
+# 			partialMatrix[currIndex2][currIndex1] = currBuckets[len(currBuckets)-1]
+# 			print partialMatrix
+# 		else:
+# 			for k in range(c):
+# 				partialMatrix[currIndex2][currIndex1] = k
+# 				currBuckets[i] = c-k
+# 			if currIndex1 == len(currBuckets)-1 - currIndex2:
+# 				currIndex2 = currIndex2 + 1
+# 				currIndex1 = 0
+# 			else:
+# 				currIndex1 = currIndex1 + 1
+# 			thefunc(currBuckets,partialMatrix,currIndex1,currIndex2)			
+# 			
+# print thefunc([4,4,4],matrixlist2,0,0)
+
+
+def matrixgen(currBuckets,partialMatrix,currIndex1,currIndex2):
+	c = currBuckets[currIndex2]
+	d = currBuckets[currIndex1+currIndex2-1]
+	while currIndex2 <= len(currBuckets)-1:
+		if currIndex1 == len(currBuckets)-currIndex2 and currIndex2 != len(currBuckets)-1:
+			partialMatrix[currIndex2][currIndex1] = currBuckets[currIndex2]
+			currIndex2 = currIndex2+1
+			currIndex1 = 0
+		elif currIndex1 == len(currBuckets)-currIndex2 and currIndex2 == len(currBuckets)-1:
+			partialMatrix[currIndex2][currIndex1] = currBuckets[currIndex2]
+			return partialMatrix
+		else:
+			num = min(c,d)
+			for k in range(1,num):
+				partialMatrix[currIndex2][currIndex1] = k
+				if currIndex1 == 0:
+					currBuckets[currIndex2] = c-2*k
+					currBuckets[currIndex1+currIndex2-1] = d-2*k
+					currIndex1 = currIndex1 + 1
+				else:
+					currBuckets[currIndex2] = c-k
+					currBuckets[currIndex1+currIndex2-1] = d-k
+					currIndex1 = currIndex1+1
+				matrixgen(currBuckets,partialMatrix,currIndex1,currIndex2)
+
+print matrixgen([4,4],matrixlist2,0,0)
+
+# for list in listoftuplesfinal2:
+# 	graphlist.append(generategraphs(list))
+# 	
+# print listoftuplesfinal2
+# print graphlist
+
+
+# finallist=[]
+# for i in range(len(graphlist)):
+# 	for j in range(len(graphlist[i])):
+# 		degminuslooplist = []
+# 		for k in range(len(graphlist[i][j])):
+# 			degminuslooplist.append(listoftuplesfinal2[i][j]-2*graphlist[i][j][k])
+# 			finallist.append(degminuslooplist)
+# 					
+# print finallist
+# 		
