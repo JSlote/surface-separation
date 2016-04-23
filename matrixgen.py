@@ -1,3 +1,7 @@
+# matrixgen.py
+# takes valence list, outputs corresponding list of graphs
+
+
 from copy import deepcopy
 
 def matrixgen(currBuckets,partialMatrix,partialColIndex,rowIndex):
@@ -39,7 +43,7 @@ def matrixgen(currBuckets,partialMatrix,partialColIndex,rowIndex):
                 return solutionList
         elif rowIndex == partialColIndex+rowIndex: #we're at a diagonal
             # we can only write even numbers in here, so iterate through half the values and double
-            for k in range(min(rowDegrees,columnDegrees)//2+1):
+            for k in xrange(min(rowDegrees,columnDegrees)//2+1):
                 updatedPartialMatrix = deepcopy(partialMatrix)
                 updatedPartialMatrix[rowIndex][partialColIndex] = 2*k
                 updatedBuckets = list(currBuckets)
@@ -50,7 +54,7 @@ def matrixgen(currBuckets,partialMatrix,partialColIndex,rowIndex):
         # otherwise (we're not at the end of a row or on the diagonal)
         else:
         #     for all possible things less than that min(stuff)
-            for k in range(min(rowDegrees,columnDegrees)+1):
+            for k in xrange(min(rowDegrees,columnDegrees)+1):
                 updatedPartialMatrix = deepcopy(partialMatrix)
                 updatedPartialMatrix[rowIndex][partialColIndex] = k
                 updatedBuckets = list(currBuckets)
@@ -60,7 +64,7 @@ def matrixgen(currBuckets,partialMatrix,partialColIndex,rowIndex):
             return solutionList
                
 #test
-for matrix in matrixgen([4,4,4],[[0,0,0],[0,0],[0]],0,0):
+for matrix in matrixgen([10,10,10],[[0,0,0],[0,0],[0]],0,0):
     for i in range(len(matrix)):
         print '   '*i+str(matrix[i])[1:-1]
     print #newline
