@@ -64,7 +64,7 @@ def matrixgen(currBuckets,partialMatrix,partialColIndex,rowIndex):
             return solutionList
                
 #test
-for matrix in matrixgen([10,10,10],[[0,0,0],[0,0],[0]],0,0):
+for matrix in matrixgen([2,2,2],[[0,0,0],[0,0],[0]],0,0):
     for i in range(len(matrix)):
         print '   '*i+str(matrix[i])[1:-1]
     print #newline
