@@ -1,7 +1,3 @@
-# currently working on: 
-
-
-# import networkx as nx
 from itertools import permutations as perms
 
 def mergeDicts(x, y):
@@ -176,32 +172,3 @@ def allRotationSystems(adjacencyMatrix):
 					yield mergeDicts({remainingNodes[0] : edges[:1]+list(partialPerm)}, followingPerms)
 
 	return recurse(G.keys())
-
-def main(k):
-
-	# legitList = []
-
-	# # import pdb; pdb.set_trace()
-	# graphs = [{1:[1,2,3,4], 2:[1,2,3,4]}, # the eye
-	# 		  {1:[1,1,2,2,3,3]},
-	# 		  {1:[1,1]},
-	# 		  {1:[1,1,2,2]},
-	# 		  {1:[1,1,2,2,3,3,4,4]}]
-
-	# for G in graphs:
-	# 	for rotSys in allRotationSystems(G):
-	# 		TG = RotationSystem(rotSys)
-	# 		if not TG.isMinimal(): continue
-	# 		n = TG.countDirectedCycles()
-	# 		g = 1 - 0.5*TG.eulerChar - 0.5*n
-	# 		if g + n - 2 <= k:
-	# 			legitList.append(G)
-	# 			break
-	# 		#else: 'fails genus test'
-
-	# for legitGraph in legitList:
-	# 	print legitGraph
-
-	for rotSys in allRotationSystems([[2,0,1],[2,1],[0]]):
-		print rotSys
-main(1)
