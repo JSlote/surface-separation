@@ -128,6 +128,7 @@ def makePartialMatrix(list):
 		partialmatrix.append([])
 		for j in range(len(list)-i):
 			partialmatrix[i].append(0)
+	return partialmatrix
 
 def generateAdjacencyMatrices(currBuckets,partialMatrix,partialColIndex,rowIndex):
     # partialMatrix is list of lists
@@ -186,5 +187,4 @@ def generateAdjacencyMatrices(currBuckets,partialMatrix,partialColIndex,rowIndex
                 updatedBuckets[rowIndex] = rowDegrees-k
                 updatedBuckets[rowIndex + partialColIndex] = columnDegrees - k
                 solutionList = solutionList + matrixgen(updatedBuckets, updatedPartialMatrix, partialColIndex+1, rowIndex)
-            return solutionList
-               
+            return solutionList               

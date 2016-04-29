@@ -11,10 +11,13 @@
 
 
 from matrixgen import *
+from degreelists import *
 from filtergraphs import *
 from filterIsomorphics import *
 
-for deglist in generateDegreeLists(k,g):
+bigList = []
+
+for deglist in generateDegreeLists(2,1):
 	tempList = generateAdjacencyMatrices(deglist,makePartialMatrix(deglist),0,0)
 	legitList = filterIsomorphics(tempList)
 	bigList.append(legitList)

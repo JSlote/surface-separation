@@ -1,21 +1,22 @@
 
 
+def specialpartition(number):
+	answer = set()
+	answer.add((number, ))
+	for x in range(4, number, 2):
+		for y in specialpartition(number - x):
+			answer.add(tuple(sorted((x, ) + y)))
+	answer = list(answer)
+	list2 = []
+	for tuples in answer:
+		if 2 not in tuples:
+			list2.append(tuples)
+	return list2
+	
 	
 
 def generateDegreeLists(k,g): #this does not yet depend on k (only works for k = 2)
-	def specialpartition(number):
-		answer = set()
-		answer.add((number, ))
-		for x in range(4, number, 2):
-			for y in specialpartition(number - x):
-				answer.add(tuple(sorted((x, ) + y)))
-		answer = list(answer)
-		list2 = []
-		for tuples in answer:
-			if 2 not in tuples:
-				list2.append(tuples)
-		return list2
-	
+
 	listoftuples = []
 	for possv in range(1, 2*g+1): #range of possible vertices
 		numedge = 2*possv #minimum possible number of edges
@@ -37,3 +38,4 @@ def generateDegreeLists(k,g): #this does not yet depend on k (only works for k =
 
 	return listoftuplesfinal
 
+print generateDegreeLists(2,1)

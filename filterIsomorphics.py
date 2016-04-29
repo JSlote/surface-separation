@@ -1,4 +1,4 @@
-from networkx import *
+import networkx as nx
 
 def matrixToGraph(matrix):
 	G=nx.MultiGraph()
@@ -14,24 +14,19 @@ def matrixToGraph(matrix):
 	return [G]
 						
 			
-def filterIsomorphics(listofmatrices):
-	graphswextra = []
-	for list in listofmatrices:
-		graphswextra.append(matrixToGraph(list))
+def filterIsomorphics(matrixList):
+	reducedMatrixList = []
+	for i in range(len(matrixList)):
+		if matrixList[i] is 0:
+			continue
+		for j in range(i+1,len(matrixList)): #for each pair of graphs
+			igraph = matrixToGraph(matrixList[i])
+			jgraph = matrixToGraph(matrixList[j])
+			if matrixList[j] is 0:
+				continue
+			if matrixList[i] not in reducedMatrixList:
+				reducedMatrixList.append(matrixList[i])
+			if nx.is_isomorphic(igraph,jgraph):
+				matrixList[j] = 0
+				
 	graphlist = []
-	for i in len(graphswextra): 
-		for j in range(i+1,len(graphswextra)): #for each pair of graphs
-			if is_isomorphic(graphswextra[i],graphswextra[j]) == False:
-				if graphswextra[i] notin graphlist:
-					graphlist.append(graphswextra[i],graphswextra[j]) #if not isomorphic and first list isn't already in list, 
-					#append both to master list
-				else: #if first list is already there, append second to list
-					graphlist.append(graphswextra[j])
-			else: #if isomorphic
-				graphswithextra[j] = 0
-				if graphswithextra[i] notin graphlist:
-					graphlist.append(graphswextra[i]) #if first list isn't already in list, append it (if it's already there, do nothing)
-	legitgraphlist = []
-	for list in graphlist:
-		if list != 0:
-			legitgraphlist.append(list)
