@@ -1,10 +1,3 @@
-# CURRENTLY WORKING ON:
-# Tryna put the n lone loops on the first n rows of the adjacency matrix
-# but they get re-written by the recursion
-# instead, should leave recursion alone and suck up putting the 2s at
-# the end of the matrix, adding as many 0s as necessary to the extant one
-
-
 import networkx as nx
 from copy import deepcopy
 
@@ -14,17 +7,14 @@ def specialpartition(number):
     for x in range(2, number, 2):
         for y in specialpartition(number - x):
             answer.add(tuple(sorted((x, ) + y)))
-    answer = list(answer)
-    list2 = []
-    for tuples in answer:
-        list2.append(tuples)
-    return list2
-    
+    return list(answer)
+
 def generateDegreeLists(k,g): #this does not yet depend on k (only works for k = 2)
 
     listoftuples = []
     for possv in range(1, 2*g+1): #range of possible vertices
-        numedge = 2*possv #minimum possible number of edges
+        numedge = possv #minimum possible number of edges
+        #This ^ used to be 2*possv but I removed the 2* --Joe
         while numedge <= 4*g: #4g is max possible number of edges 
             if numedge - possv <= 2*g: #another graph condition
                 tuplist = specialpartition(numedge*2) #each edge contributes 2 to the 
@@ -42,27 +32,40 @@ def generateDegreeLists(k,g): #this does not yet depend on k (only works for k =
     return listoftuplesfinal
 
 def generateAdjacencyMatrices(deglist):
-    def makeInitialMatrix(deglist, numberOfLoneLoops):
+    def makeInitialMatrix(deglist):
         partialmatrix = []
-        for i in range(len(deglist)+numberOfLoneLoops):
+        for i in range(len(deglist)):
             partialmatrix.append([])
-            for j in range(len(deglist)+numberOfLoneLoops-i):
-                if j == i and i < numberOfLoneLoops:
-                    partialmatrix[i].append(2)
-                else:
-                    partialmatrix[i].append(0)
-        print "partialmatrix", partialmatrix
+            for j in range(len(deglist)-i):
+                partialmatrix[i].append(0)
         return partialmatrix
 
-    def recurse(currBuckets, partialMatrix, partialColIndex, rowIndex):
+    def recurse(currBuckets, partialMatrix, partialColIndex, rowIndex, numberOfLoneLoops):
         # partialMatrix is list of lists
         # index1 is index inside row
         # index2 is row
         # location in matrix [index2, index2+index1]
 
+
+        def laminate(matrix):
+            #add lone loops at the end of construction:
+            for row in xrange(len(matrix)):
+                matrix[row] += [0 for y in range(numberOfLoneLoops)]
+
+            loneLoopsSubMatrix = []
+            for i in range(numberOfLoneLoops):
+                loneLoopsSubMatrix.append([2]+[0 for y in range(numberOfLoneLoops-i-1)])
+
+            matrix += loneLoopsSubMatrix
+
+        if currBuckets == []:
+            laminate(partialMatrix) 
+            return [partialMatrix]
+
         #currbuckets is degreelist
         rowDegrees = currBuckets[rowIndex]
         columnDegrees = currBuckets[partialColIndex+rowIndex]
+
 
         # goes down the rows
         # while rowIndex <= len(currBuckets)-1: #cuz it starts at zero
@@ -70,6 +73,10 @@ def generateAdjacencyMatrices(deglist):
         # BASE CASE:
         if partialColIndex == 0 and rowIndex == len(currBuckets)-1:
             partialMatrix[rowIndex][partialColIndex] = rowDegrees
+
+            if numberOfLoneLoops > 0:
+                laminate(partialMatrix)
+
             return [partialMatrix]
         
         # RECURSION STEP:
@@ -89,7 +96,7 @@ def generateAdjacencyMatrices(deglist):
                     updatedBuckets[rowIndex] = 0
                     updatedBuckets[rowIndex + partialColIndex] = columnDegrees - rowDegrees
                     # make newBuckets and newPartialMatrix
-                    solutionList = solutionList + recurse(updatedBuckets, updatedPartialMatrix, 0, rowIndex+1)
+                    solutionList = solutionList + recurse(updatedBuckets, updatedPartialMatrix, 0, rowIndex+1, numberOfLoneLoops)
                     return solutionList
             elif rowIndex == partialColIndex+rowIndex: #we're at a diagonal
                 # we can only write even numbers in here, so iterate through half the values and double
@@ -98,31 +105,30 @@ def generateAdjacencyMatrices(deglist):
                     updatedPartialMatrix[rowIndex][partialColIndex] = 2*k
                     updatedBuckets = list(currBuckets)
                     updatedBuckets[rowIndex] = rowDegrees-2*k
-                    solutionList = solutionList + recurse(updatedBuckets, updatedPartialMatrix, partialColIndex+1, rowIndex)
+                    solutionList = solutionList + recurse(updatedBuckets, updatedPartialMatrix, partialColIndex+1, rowIndex, numberOfLoneLoops)
                 return solutionList
                 
             # otherwise (we're not at the end of a row or on the diagonal)
             else:
-            #     for all possible things less than that min(stuff)
+            # for all possible things less than that min(stuff)
                 for k in xrange(min(rowDegrees,columnDegrees)+1):
                     updatedPartialMatrix = deepcopy(partialMatrix)
                     updatedPartialMatrix[rowIndex][partialColIndex] = k
                     updatedBuckets = list(currBuckets)
                     updatedBuckets[rowIndex] = rowDegrees-k
                     updatedBuckets[rowIndex + partialColIndex] = columnDegrees - k
-                    solutionList = solutionList + recurse(updatedBuckets, updatedPartialMatrix, partialColIndex+1, rowIndex)
+                    solutionList = solutionList + recurse(updatedBuckets, updatedPartialMatrix, partialColIndex+1, rowIndex, numberOfLoneLoops)
                 return solutionList
 
-    #Here we deal with vertices with valence 2 separately.
-    #All verts of valence 2 MUST be their own loops (indeed,
+    # Here we deal with vertices with valence 2 separately.
+    # All verts of valence 2 MUST be their own loops (indeed,
     # below is the only check of this fact)
     # so count all such vs
     numberOfLoneLoops = deglist.count(2)
-    print 'numberOfLoneLoops', numberOfLoneLoops
     # remove them from the matrix generation process
     deglist = [y for y in deglist if y != 2]
 
-    return recurse(deglist,makeInitialMatrix(deglist, numberOfLoneLoops),numberOfLoneLoops,0)
+    return recurse(deglist,makeInitialMatrix(deglist),0,0, numberOfLoneLoops)
 
 def matrixToGraph(matrix):
     G=nx.MultiGraph()
