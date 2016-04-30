@@ -38,4 +38,4 @@ def generateDegreeLists(k,g): #this does not yet depend on k (only works for k =
 
 	return listoftuplesfinal
 
-print generateDegreeLists(2,1)
+# print generateDegreeLists(2,1)

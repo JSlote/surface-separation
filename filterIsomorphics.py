@@ -11,22 +11,21 @@ def matrixToGraph(matrix):
 				numHalfEdgestoPlace /= 2
 			for i in range(numHalfEdgestoPlace):
 				G.add_edge(row,column)
-	return [G]
-						
-			
+	return G
+
 def filterIsomorphics(matrixList):
 	reducedMatrixList = []
 	for i in range(len(matrixList)):
 		if matrixList[i] is 0:
 			continue
 		for j in range(i+1,len(matrixList)): #for each pair of graphs
-			igraph = matrixToGraph(matrixList[i])
-			jgraph = matrixToGraph(matrixList[j])
 			if matrixList[j] is 0:
 				continue
 			if matrixList[i] not in reducedMatrixList:
 				reducedMatrixList.append(matrixList[i])
+			igraph = matrixToGraph(matrixList[i])
+			jgraph = matrixToGraph(matrixList[j])
 			if nx.is_isomorphic(igraph,jgraph):
 				matrixList[j] = 0
 				
-	graphlist = []
+	return reducedMatrixList

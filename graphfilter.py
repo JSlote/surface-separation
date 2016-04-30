@@ -146,6 +146,7 @@ class RotationSystem(object):
 
 def allRotationSystems(adjacencyMatrix):
 	#convert adjacency matrix to rotation-system-like format
+
 	numNodes = len(adjacencyMatrix[0])
 	G = {k: [] for k in range(1,numNodes+1)}
 	currEdgeIndex = 0

@@ -1,33 +1,24 @@
-# For each legit degree list
-# 	generate list of adjacency matrices
-# 	remove isomorphic graphs in this smaller list (using NetworkX)
-# 	add small list to big list!
-
-# For each adjacency matrix
-# 	loop through rotation systems
-# 		if we hit one that is both minimal and satisfies bounds
-# 			add the adjacency matrix to our legit list
-# 			break
-
-k=2
-g=1
-
-
-# from graphgen import *
+from graphgen import *
 from graphfilter import *
 import networkx as nx
 
-# for deglist in generateDegreeLists(n,k):
-# 	tempList = generateAdjacencyMatrices(deglist)
-# 	legitList = filterIsomorphics(tempList)
-# 	bigList.append(legitList)
+k=2 #THIS MUST REMAIN AT 2 FOR NOW
+g=1
+
+matrixPossibilities = []
+
+for deglist in generateDegreeLists(k,g): #k,g
+	print deglist
+	tempList = generateAdjacencyMatrices(deglist)
+	print tempList
+	legitList = filterIsomorphics(tempList)
+	matrixPossibilities += legitList
 
 minTwoCutGraphs = []
 
-matrixPossibilities = [[[0,4],[0]]]
-
 for adjacencyMatrix in matrixPossibilities:
 	for rawRotationSystem in allRotationSystems(adjacencyMatrix):
+		#initial rotation systems into objects with all the methods we need
 		rotationSystem = RotationSystem(rawRotationSystem)
 		if rotationSystem.isMinimal():
 			c = rotationSystem.countDirectedCycles()
@@ -35,6 +26,8 @@ for adjacencyMatrix in matrixPossibilities:
 			e = len(rotationSystem.undirEdges)
 			if g >= 0.5*(c - v + e) - k + 1: #bound is satisfied
 				minTwoCutGraphs.append(rawRotationSystem)
+				# we don't need to check any other rotation systems for
+				# this graph, so...
 				break
 
 print minTwoCutGraphs
