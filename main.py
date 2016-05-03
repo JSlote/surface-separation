@@ -13,8 +13,8 @@ from graphfilter import *
 import networkx as nx
 import sys
 
-k=2 #THIS MUST REMAIN AT 2 FOR NOW
-g=2
+k = 2 #THIS MUST REMAIN AT 2 FOR NOW
+g = 1
 
 matrixPossibilities = []
 
