@@ -97,50 +97,55 @@ class RotationSystem(object):
 		return len(cycles)
 
 	#this only works for 2-cuts
-	def isMinimal(self):
+	def isMinimal(self, k):
 		waitingNodes = []
 
-		# Pick an arbitrary edge in self
-		firstEdge = next(self.undirEdges.iterkeys())
+		unusedEdges = self.undirEdges.copy()
 
-		# Assign it a direction arbitrarily
+		while len(unusedEdges) > 0:
+			# Pick an arbitrary edge in self
+			firstEdge = next(unusedEdges.iterkeys())
 
-		# edgeDirDict holds assigned directions
-		# key is edge, value is "to" node
-		edgeDirDict = { firstEdge : self.undirEdges[firstEdge][1]}
+			unusedEdges.pop(firstEdge)
 
-		# Add the two nodes incident to that first edge to waitingNodes
-		waitingNodes = list(self.undirEdges[firstEdge])
+			# Assign it a direction arbitrarily;
+			# edgeDirDict holds assigned directions
+			# key is edge, value is "to" node
+			edgeDirDict = { firstEdge : self.undirEdges[firstEdge][1]}
 
-		while waitingNodes: # while waitingNodes has nodes in it
-			# Pop vertex V from Waiting
-			currNode = waitingNodes.pop()
-			# Find an edge incident to currNode that has a direction already assigned:
-			currNodeEdgeList = self.nodes[currNode]
-			for i in xrange(len(currNodeEdgeList)):
-				if currNodeEdgeList[i] in edgeDirDict:
-					startEdgeIndex = i
-					break
+			# Add the two nodes incident to that first edge to waitingNodes
+			waitingNodes = list(self.undirEdges[firstEdge])
 
-			# Try to assign directions alternating between inward and outward along the cyclic ordering.
-			# create a variable to toggle 'away' and 'to'
-			shouldBeToCurrNode = edgeDirDict[currNodeEdgeList[startEdgeIndex]] is not currNode
-			# iterate through the other edges
-			for i in xrange(len(currNodeEdgeList)-1):
-				index = (startEdgeIndex + i + 1) % len(currNodeEdgeList)
-				edge = currNodeEdgeList[index]
-				if edge in edgeDirDict:
-					# if the current edge in question already had an incompatible direction assigned
-					if (edgeDirDict[edge] == currNode) is not shouldBeToCurrNode:
-						return False
-					#else, it's already correct
-				else: #the current edge doesn't have a direction assigned yet
-					otherNodeOfEdge = self.undirEdges[edge][1] if (self.undirEdges[edge][0] == currNode) else self.undirEdges[edge][0]
-					# Add vertices incident to each edge that is newly assigned a direction to Waiting
-					waitingNodes.append(otherNodeOfEdge)
-					edgeDirDict[edge] = currNode if shouldBeToCurrNode else otherNodeOfEdge
+			while waitingNodes: # while waitingNodes has nodes in it
+				# Pop vertex V from Waiting
+				currNode = waitingNodes.pop()
+				# Find an edge incident to currNode that has a direction already assigned:
+				currNodeEdgeList = self.nodes[currNode]
+				for i in xrange(len(currNodeEdgeList)):
+					if currNodeEdgeList[i] in edgeDirDict:
+						startEdgeIndex = i
+						break
 
-				shouldBeToCurrNode = not shouldBeToCurrNode
+				# Try to assign directions alternating between inward and outward along the cyclic ordering.
+				# create a variable to toggle 'away' and 'to'
+				shouldBeToCurrNode = edgeDirDict[currNodeEdgeList[startEdgeIndex]] is not currNode
+				# iterate through the other edges
+				for i in xrange(len(currNodeEdgeList)-1):
+					index = (startEdgeIndex + i + 1) % len(currNodeEdgeList)
+					edge = currNodeEdgeList[index]
+					if edge in edgeDirDict:
+						# if the current edge in question already had an incompatible direction assigned
+						if (edgeDirDict[edge] == currNode) is not shouldBeToCurrNode:
+							return False
+						#else, it's already correct
+					else: #the current edge doesn't have a direction assigned yet
+						otherNodeOfEdge = self.undirEdges[edge][1] if (self.undirEdges[edge][0] == currNode) else self.undirEdges[edge][0]
+						# Add vertices incident to each edge that is newly assigned a direction to Waiting
+						waitingNodes.append(otherNodeOfEdge)
+						edgeDirDict[edge] = currNode if shouldBeToCurrNode else otherNodeOfEdge
+						unusedEdges.pop(edge)
+
+					shouldBeToCurrNode = not shouldBeToCurrNode
 
 		return True #(we had no problems)
 

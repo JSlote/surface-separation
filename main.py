@@ -14,7 +14,7 @@ import networkx as nx
 import sys
 
 k = 2 #THIS MUST REMAIN AT 2 FOR NOW
-g = 1
+g = 2
 
 matrixPossibilities = []
 
@@ -36,7 +36,7 @@ for i in xrange(numPossibilities):
 	for rawRotationSystem in allRotationSystems(adjacencyMatrix):
 		#initial rotation systems into objects with all the methods we need
 		rotationSystem = RotationSystem(rawRotationSystem)
-		if rotationSystem.isMinimal():
+		if rotationSystem.isMinimal(k):
 			c = rotationSystem.countDirectedCycles()
 			v = len(rotationSystem.nodes)
 			e = len(rotationSystem.undirEdges)
