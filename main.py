@@ -11,14 +11,18 @@ import networkx as nx
 import sys
 
 k = 2 #THIS MUST REMAIN AT 2 FOR NOW
-g = 2
+g = 3
 
 matrixPossibilities = []
 
+numGraphs = 0
 for deglist in generateDegreeLists(k,g): #k,g
 	tempList = generateAdjacencyMatrices(deglist)
 	legitList = filterIsomorphics(tempList)
 	matrixPossibilities += legitList
+	numGraphs += len(legitList)
+	sys.stdout.write("\rNumber of possible graphs: "+ str(numGraphs) )
+	sys.stdout.flush()
 
 minTwoCutGraphs = []
 
