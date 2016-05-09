@@ -1,7 +1,4 @@
 # Here's where things stand:
-# 1. We need to update/fix the rotationSystem.isMinimal() routine
-# because it says something like 1:[1,3,1,3], 2:[2,2] is minimal
-
 # 2. We need to take another look at the degree list generation
 # because I had to modify it but I don't trust my modifications
 
