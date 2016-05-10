@@ -11,7 +11,7 @@ import networkx as nx
 import sys
 
 k = 2 #THIS MUST REMAIN AT 2 FOR NOW
-g = 3
+g = 1
 
 matrixPossibilities = []
 
@@ -24,10 +24,15 @@ for deglist in generateDegreeLists(k,g): #k,g
 	sys.stdout.write("\rNumber of possible graphs: "+ str(numGraphs) )
 	sys.stdout.flush()
 
+possibleGraphsFile = open("possiblegraphs.txt", "w")
+for graph in matrixPossibilities:
+	possibleGraphsFile.write(str(graph)+"\n")
+possibleGraphsFile.close()
+
 minTwoCutGraphs = []
 
 numPossibilities = len(matrixPossibilities)
-print "Finished constructing superset of", numPossibilities, "possible graphs."
+print "\nFinished constructing superset of", numPossibilities, "possible graphs."
 
 for i in xrange(numPossibilities):
 	adjacencyMatrix = matrixPossibilities[i]
