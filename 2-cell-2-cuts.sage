@@ -1,8 +1,8 @@
 print """
 This program will run indefinitely, counting the number of graphs
-that can be embedded on the n-torus in such a way that the surface
-is separated into two cellular faces, neither of which border them-
-selves.
+that can be embedded on the n-holed torus such that the surface is
+paritioned into two cellular (homeomorphic to the disc) faces,
+neither of which border themselves.
 
 It will also save each set of graphs as a compressed Sage object
 in the current directory.
