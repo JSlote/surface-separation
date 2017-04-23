@@ -57,7 +57,7 @@ def next_genus(seeds, verbose = False):
             completeSet.update(output[1])
 
     if verbose:
-        sys.stdout.write("\r{} graphs - done!".format(len(completeSet)))
+        sys.stdout.write("\r{} graphs - done!\n".format(len(completeSet)))
         
     return list(completeSet)
 
