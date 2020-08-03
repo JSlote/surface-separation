@@ -55,3 +55,4 @@ for i in xrange(numPossibilities):
 print "\nGraph filtering complete. Here are min-"+str(k)+"-cuts on a",str(g)+"-torus:"
 for graph in minTwoCutGraphs:
 	print graph[0]
+	# print nx.convert_matrix[graph[1]]
