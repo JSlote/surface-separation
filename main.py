@@ -9,19 +9,27 @@ from graphgen import *
 from graphfilter import *
 import networkx as nx
 import sys
+from bettiDef import *
 
 k = 2 #THIS MUST REMAIN AT 2 FOR NOW
-g = 1
+g = 3
 
 matrixPossibilities = []
 
 numGraphs = 0
+count = 0
+total = len(generateDegreeLists(k,g))
 for deglist in generateDegreeLists(k,g): #k,g
+	count += 1
+	print "Start"
 	tempList = generateAdjacencyMatrices(deglist)
+	print "matrices generated", len(tempList)
 	legitList = filterIsomorphics(tempList)
-	matrixPossibilities += legitList
-	numGraphs += len(legitList)
-	sys.stdout.write("\rNumber of possible graphs: "+ str(numGraphs) )
+	print "isos filtered"
+	filteredList = bettiFilter(legitList, g)
+	matrixPossibilities += filteredList
+	numGraphs += len(filteredList)
+	sys.stdout.write("\r Working on degree list " + str(count) + " out of " + str(total)+ ". Number of possible graphs: "+ str(numGraphs) )
 	sys.stdout.flush()
 
 possibleGraphsFile = open("possiblegraphs.txt", "w")

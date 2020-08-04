@@ -146,6 +146,7 @@ def matrixToGraph(matrix):
             
 def filterIsomorphics(matrixList):
     reducedMatrixList = []
+
     for i in range(len(matrixList)):
         if matrixList[i] is 0:
             continue

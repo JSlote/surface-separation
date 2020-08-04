@@ -27,5 +27,7 @@ def filterIsomorphics(matrixList):
 			jgraph = matrixToGraph(matrixList[j])
 			if nx.is_isomorphic(igraph,jgraph):
 				matrixList[j] = 0
-				
+	if matrixList[-1] is not 0:
+		reducedMatrixList.append(matrixList[-1])
+
 	return reducedMatrixList
