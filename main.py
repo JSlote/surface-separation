@@ -41,13 +41,28 @@ minTwoCutGraphs = []
 
 numPossibilities = len(matrixPossibilities)
 print "\nFinished constructing superset of", numPossibilities, "possible graphs."
+'''
 
+minTwoCutGraphs = []
+numPossibilities = 6
+matrixPossibilities = []
+
+graphs = open("possiblegraphs.txt", "r")
+for line in graphs:
+	matrix = line.rstrip()
+	matrix = list(matrix)
+	matrixPossibilities.append(matrix)
+
+graphs.close()
+'''
 for i in xrange(numPossibilities):
 	adjacencyMatrix = matrixPossibilities[i]
 	percentDone = (100*i) / numPossibilities
 	sys.stdout.write("\rCurrent Status: %d%% complete; analyzing %s" % (percentDone, adjacencyMatrix))
 	sys.stdout.flush()
+	count = 0
 	for rawRotationSystem in allRotationSystems(adjacencyMatrix):
+		print(percentDone, " ", adjacencyMatrix, " ", count)
 		#initial rotation systems into objects with all the methods we need
 		rotationSystem = RotationSystem(rawRotationSystem)
 		if rotationSystem.isMinimal(k):
@@ -59,6 +74,7 @@ for i in xrange(numPossibilities):
 				# we don't need to check any other rotation systems for
 				# this graph, so...
 				break
+		count += 1
 
 print "\nGraph filtering complete. Here are min-"+str(k)+"-cuts on a",str(g)+"-torus:"
 for graph in minTwoCutGraphs:

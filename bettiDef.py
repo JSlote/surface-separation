@@ -99,7 +99,7 @@ def maxMin(edge):
 
 def multipleCotrees(g):
     '''
-    Given a grah, calculates all possible spanning trees, removes duplicates, and returns them
+    Given a graph, calculates all possible spanning trees, removes duplicates, and returns them
 
     Parameters:
     g (netwokrx multigraph object) - the original graph object
@@ -113,7 +113,7 @@ def multipleCotrees(g):
     cotrees = []
 
     if len(g.nodes()) == 1:
-        cotrees.append(graphToDict(g))
+        cotrees.append(g)
     else:
         trees = findAllSpanningTrees(g)
         for tree in trees:
