@@ -3,6 +3,7 @@ from graphgen import *
 from copy import *
 import itertools
 from filterIsomorphics import *
+import ast
 
 
 def graphToDict(g):
@@ -355,3 +356,20 @@ def main():
 
 main()
 '''
+def main():
+    # Open and read in the file lines as a list of strings, eliminate \n's.
+    with open('mmaOutput.txt') as f:
+        matrix_list_str = f.read().splitlines()
+    f.close()
+
+
+    # Convert each element of the string list into a list of ints.
+    matrixPossibilities = map(ast.literal_eval,matrix_list_str)
+    output = bettiFilter(matrixPossibilities, 3)
+    print len(output)
+    '''for matrix in output:
+        print matrix
+        graph = matrixToGraph(matrix)
+        print graph.edges()'''
+
+main()
